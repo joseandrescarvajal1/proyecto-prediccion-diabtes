@@ -5,3 +5,4 @@ Este proyecto utiliza modelos de machine learning para estimar la probabilidad d
 Integrantes: 
 
 1. Jose Andres Carvajal
+2. Edwin López Castañeda
