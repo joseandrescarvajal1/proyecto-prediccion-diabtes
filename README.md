@@ -7,3 +7,4 @@ Integrantes:
 1. Jose Andres Carvajal
 2. Ricardo Espinosa Peralta
 3. Edwin López Castañeda
+4. Alejandra Ossa Yepes
