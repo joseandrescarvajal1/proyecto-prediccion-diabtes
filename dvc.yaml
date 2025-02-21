@@ -1,0 +1,13 @@
+stages:
+  train:
+    cmd: /Users/alejandraossayepes/anaconda3/bin/python scripts/Model_dvc.py
+    deps:
+      - scripts/Model_dvc.py
+    outs:
+      - models/knn_model.pkl
+      - models/dt_model.pkl
+      - models/rf_model.pkl
+    metrics:
+      - data/results/KNN_metrics.json
+      - data/results/Decision Tree_metrics.json
+      - data/results/Random Forest_metrics.json
