@@ -15,65 +15,90 @@ def main():
     # Algo de CSS para “simular” un fondo y colores
     st.markdown("""
 <style>
-/* Fondo de la app */
+/* General Background */
 .stApp {
-    background-color: #F7F7F7;
+    background: linear-gradient(to right, #eef2f3, #dfe9f3);
+    font-family: 'Segoe UI', Roboto, sans-serif;
 }
 
-/* Contenedor de la tarjeta del formulario */
+/* Form Card Styling */
 div[data-testid="stForm"] {
-    background-color: #FFFFFF;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    max-width: 900px; /* Se aumentó el ancho máximo */
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    max-width: 800px;
     margin: auto;
-    overflow: hidden; /* Para mantener los bordes redondeados */
+    overflow: hidden;
     width: 100%;
 }
 
-/* Título integrado en la tarjeta */
+/* Form Title */
 .titulo-formulario {
-    background-color: #115A9E; /* Azul */
-    color: #FFFFFF; /* Texto blanco */
+    background: linear-gradient(to right, #0078D7, #005bb5); /* Blue Gradient */
+    color: white;
     text-align: center;
-    font-family: 'Segoe UI', Roboto, sans-serif;
-    font-weight: 600;
-    font-size: 1.5rem;
+    font-weight: bold;
+    font-size: 1.7rem;
     padding: 1rem;
     margin-bottom: 0;
-    border-top-left-radius: 8px; /* Redondea las esquinas superiores */
-    border-top-right-radius: 8px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
     width: 100%;
 }
 
-/* Contenido del formulario */
+/* Form Container */
 .form-container {
     padding: 2rem;
 }
 
-/* Botones */
+/* Gradient Buttons */
 .stForm button {
-    background-color: #115A9E !important;
-    color: #FFFFFF !important;
-    border-radius: 6px !important;
-    height: 3em;
+    background: linear-gradient(to right, #0078D7, #005bb5) !important;
+    color: white !important;
+    border-radius: 8px !important;
     width: 100%;
-    font-weight: 600;
+    font-weight: bold;
     font-size: 1rem;
     border: none;
+    transition: all 0.3s ease-in-out;
+    padding: 0.8rem;
 }
 
-/* Labels en negrita */
+/* Button Hover Effect */
+.stForm button:hover {
+    background: linear-gradient(to right, #005bb5, #003f80) !important;
+    transform: scale(1.03);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Input Fields */
+.stForm input {
+    background: white !important;
+    color: black !important;
+    border-radius: 6px;
+}
+
+/* Labels */
 label {
     font-weight: 600 !important;
+    color: #333;
+}
+                
+div[data-baseweb="input"] {
+    background: transparent !important;
+}
+div[data-baseweb="input"] > div {
+    background: transparent !important;
 }
 </style>
+
+
     """, unsafe_allow_html=True)
 
     # Iniciamos el formulario con título integrado
     with st.form(key='diabetes_form'):
-        st.markdown('<div class="titulo-formulario">PREDICTOR DE DIABETES - FORMULARIO</div>', unsafe_allow_html=True)
+        st.markdown('<div class="titulo-formulario">FORMULARIO PREDICTOR DE DIABETES</div>', unsafe_allow_html=True)
         
         st.markdown('<div class="form-container">', unsafe_allow_html=True)
         col1, col2 = st.columns(2)
