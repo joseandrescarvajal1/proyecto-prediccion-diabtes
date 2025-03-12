@@ -1,4 +1,16 @@
 import streamlit as st
+import requests
+import logging
+import json
+
+def load_config():
+    with open("config.json", "r") as file:
+        config = json.load(file)
+    return config["API_URL"]
+
+API_URL = load_config()
+
+
 
 def predecir_diabetes(edad, glucosa, presion, grosor_piel,
                      bmi, embarazos, insulina, pedigree):
@@ -6,7 +18,49 @@ def predecir_diabetes(edad, glucosa, presion, grosor_piel,
     Aquí colocarías la lógica de tu modelo.
     Este ejemplo simplemente devuelve un número ficticio.
     """
-    return 0.65  # Valor de ejemplo
+
+    logging.basicConfig(level=logging.DEBUG)
+
+    # Llamada a la API
+
+    payload = {
+        "edad": edad,
+        "glucosa": glucosa,
+        "grosor_piel": grosor_piel,
+        "bmi": bmi,
+        "presion_sanguinea": presion,
+        "embarazos": embarazos,
+        "insulina": insulina,
+        "pedigree": pedigree
+    }
+
+    logging.debug(f"Enviando payload: {payload}")
+
+    try:
+        response = requests.post(API_URL, data=payload)
+        logging.debug(f"Respuesta recibida: {response.status_code} - {response.text}")
+        
+        if response.status_code == 200:
+            data = response.json()
+            prediction = data.get("prediction", "Error en la respuesta")
+            resultado_texto = "Positivo para diabetes" if prediction == 1 else "Negativo para diabetes"
+
+            logging.info(f"Predicción: {prediction}")
+
+            st.session_state.resultado = resultado_texto
+
+            st.html(f"<span style='font-size:26px'>La probabilidad estimada de diabetes es: {float(prediction) * 100:.1f}%</span>")
+
+        else:
+            st.session_state.resultado = "Error en la respuesta de la API: "
+            logging.error(f"Error en la respuesta de la API: {response.text}")
+            st.error("Error en la respuesta de la API: " + response.text)
+
+    except Exception as e:
+        logging.exception("Error en la conexión con la API")
+        st.session_state.resultado = f"Error en la conexión: {str(e)}"
+        st.error("Error en la conexión con la API: " + response.text)
+
 
 def main():
     # Ajusta la configuración general de la página
@@ -91,6 +145,11 @@ div[data-baseweb="input"] {
 div[data-baseweb="input"] > div {
     background: transparent !important;
 }
+
+.stElementContainer, div[role="alert"] * {
+    color: black !important;
+    font-weight: bold !important;
+}                
 </style>
 
 
@@ -127,14 +186,14 @@ div[data-baseweb="input"] > div {
     # Lógica de los botones
     if clear_button:
         # "Limpiar" recarga la página para resetear los campos
-        st.experimental_rerun()
+        st.rerun()
 
     if submit_button:
-        probabilidad = predecir_diabetes(
+        predecir_diabetes(
             edad, glucosa, presion, grosor_piel, bmi,
             embarazos, insulina, pedigree
         )
-        st.success(f"La probabilidad estimada de diabetes es: {probabilidad * 100:.2f}%")
+        
 
 if __name__ == '__main__':
     main()
