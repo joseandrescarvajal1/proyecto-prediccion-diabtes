@@ -4,6 +4,8 @@ from sklearn.metrics import f1_score, precision_score, recall_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
+import joblib
+
 
 
 def train_knn(x_train, y_train):
@@ -16,6 +18,7 @@ def train_knn(x_train, y_train):
     cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
     grid_search = GridSearchCV(estimator=knn, param_grid=hyperparameters, n_jobs=-1, cv=cv, scoring='f1',error_score=0)
     best_model = grid_search.fit(x_train,y_train)
+    joblib.dump(best_model.best_estimator_, 'models/knn_model.pkl')
     return best_model, grid_search.best_params_
 
 def train_descion_tree(x_train, y_train):
@@ -27,6 +30,7 @@ def train_descion_tree(x_train, y_train):
     cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
     grid_search = GridSearchCV(estimator=DecisionTreeClassifier(), param_grid=hyperparameters, n_jobs=-1, cv=cv, scoring='f1',error_score=0)
     best_model = grid_search.fit(x_train,y_train)
+    joblib.dump(best_model.best_estimator_, 'models/decision_tree_model.pkl')
     return best_model, grid_search.best_params_
 
 def train_random_forest(x_train, y_train):
@@ -36,6 +40,7 @@ def train_random_forest(x_train, y_train):
     cv = RepeatedStratifiedKFold(n_splits=10, n_repeats=3, random_state=1)
     grid_search = GridSearchCV(estimator=RandomForestClassifier(), param_grid=hyperparameters, n_jobs=-1, cv=cv, scoring='f1',error_score=0)
     best_model = grid_search.fit(x_train,y_train)
+    joblib.dump(best_model.best_estimator_, 'models/random_forest_model.pkl')
     return best_model, grid_search.best_params_
 
 def model_predict(x_test,y_test, best_model):

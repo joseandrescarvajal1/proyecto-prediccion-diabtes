@@ -7,7 +7,6 @@ import mlflow.sklearn
 from models import *
 
 
-
 df=pd.read_csv("data/raw/diabetes.csv")
 target_name='Outcome'
 y= df[target_name]
