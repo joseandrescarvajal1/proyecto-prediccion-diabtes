@@ -9,7 +9,7 @@ Integrantes:
 3. Edwin López Castañeda
 4. Alejandra Ossa Yepes  
   
-# 📌 Guía para Ejecutar una Aplicación Streamlit Localmente
+# 📌 Manual de Instalación del Tablero
 
 Este documento proporciona instrucciones detalladas para ejecutar una aplicación **Streamlit** en tu entorno local después de descargar o clonar el repositorio.
 
